@@ -1,0 +1,10 @@
+onClick={(e)=>{
+                 console.log(e.cancelable);
+                 console.log(ObjtoDo);
+                 setToDos(toDos.filter(obj=>{
+                  if(obj.id==ObjtoDo.id){
+                    obj.status = e.cancelable
+                  }
+                  return obj
+                 }))
+                }}
