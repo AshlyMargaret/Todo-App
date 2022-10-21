@@ -12,11 +12,16 @@ const day = dayNames[date.getDay()];
 
   const [todo, setToDo] = useState('');
   const [todos, setToDos] = useState([])
+
+  const clearInputField = () => {
+    setToDo('');
+ };
+
   return (
     <div className="app_container">
     <div className="app">
       <div className="mainHeading">
-        <h1>ToDo List</h1>
+        <h1>ToDo</h1>
       </div>
       <div className="subHeading">
         <br />
@@ -26,6 +31,7 @@ const day = dayNames[date.getDay()];
         <input value={todo} onChange={(e)=>{
           setToDo(e.target.value)
         }} type="text" placeholder="🖊️ Add item..." />
+         <i onClick={clearInputField} className="fas fa-eraser" title="Clear"></i>
         <i onClick={()=>{
           setToDos([...todos, { id:Date.now(), text:todo , progressStatus:"on_going" , isDeleted:false } ])
         }} className="fas fa-plus"></i>
@@ -35,7 +41,7 @@ const day = dayNames[date.getDay()];
     <div className="flexBox_container">
       <div className="done">
         <div className="title">
-          <h3>Done</h3> 
+          <h4>Done</h4> 
         </div>
         <div className="todos">
           {
@@ -44,13 +50,35 @@ const day = dayNames[date.getDay()];
                 return(
                   <div className="todo">
                     <div className="left">
-                    <input type="checkbox" />
+                    <i onClick={(e)=>{
+                      e.target.value = true;
+                      console.log(e.target.value);
+                      console.log(todo);
+                      setToDos(todos.filter((object)=>{
+                        if(object.id==todo.id){
+                          object.progressStatus =e.target.value ? "not_complted":"done";
+                        }
+                        return object;
+                      }))
+                    }} className="fas fa-redo-alt" title="Retrieve"></i>
+                    </div>
                     <div className="top">
                     <p>{todo.text}</p>
                     </div>
-                    </div>
+                    
                     <div className="right">
-                    <i className="fas fa-times"></i>
+                    <i onClick={(e)=>{
+                      console.log(e);
+                      console.log(todo);
+                      e.target.value = true
+                      setToDos(todos.filter((object)=>{
+                        if(object.id==todo.id){
+                          object.isDeleted=e.target.value
+                          object.progressStatus = "trash"
+                        }
+                        return object
+                      }))
+                    }} className="fas fa-trash-alt" title="Remove"></i>
                     </div>
                 </div>
                 )
@@ -63,12 +91,12 @@ const day = dayNames[date.getDay()];
       </div>
       <div className="ongoing">
       <div className="title">
-          <h3>On Going</h3>
+          <h4>On Going</h4>
         </div>
         <div className="todos">
         {
           todos.map((todo)=>{
-            if(todo.progressStatus=="on_going" && !todo.isDeleted)
+            if(todo.progressStatus=="on_going" || todo.progressStatus=="not_complted" && !todo.isDeleted)
             return(
               <div className="todo">
                <div className="left">
@@ -82,10 +110,11 @@ const day = dayNames[date.getDay()];
                     return object;
                   }))
                 }} value={todo.progressStatus=="done"} type="checkbox" name="" id="" />
+                 </div>
                 <div className="top">
                 <p>{todo.text}</p>
                 </div>
-                </div>
+               
 
                 <div className="right">
                 <i onClick={(e)=>{
@@ -97,11 +126,12 @@ const day = dayNames[date.getDay()];
                     console.log("object id:",filterTodo.id);
                     filterTodo.isDeleted =e.target.value
                     console.log("status drop",filterTodo.isDeleted);
+                    filterTodo.progressStatus =e.target.value ? "trash":"on_going";
                   }
                   return filterTodo
                  
                  }))
-                }}  className="fas fa-times"></i>
+                }}  className="fas fa-trash-alt" title="Remove"></i>
                </div>
               </div>
             )
@@ -112,15 +142,47 @@ const day = dayNames[date.getDay()];
       </div>
       <div className="trash">
       <div className="title">
-          <h3>Trash</h3>
+          <h4>Trash</h4>
         </div>
+        <div className="todos">
         {
            
            todos.map((todo)=>{
-              if(todo.isDeleted){
+              if(todo.progressStatus=="trash" &&todo.isDeleted ){
                 return(
                   <div className="todo">
-                  <p>{todo.text}</p>
+                    <div className="left">
+                    <i onClick={(e)=>{
+                      console.log(e)
+                      console.log(todo);
+                      e.target.value="true"
+                      setToDos(todos.map((object)=>{
+                        if(object.id==todo.id){
+                          object.progressStatus =e.target.value ? "on_going":null;
+                        }
+                        return object
+                      }))
+                    }
+                    } 
+                  className="fas fa-redo-alt" title="Retrieve"></i>
+                  </div>
+                    <div className="top">
+                    <p>{todo.text}</p>
+                    </div>  
+                    
+                    <div className="right">
+                      <i onClick={(e)=>{
+                        e.target.value=true
+                        console.log(todo);
+                        setToDos(todos.filter((object)=>{
+                          if(object.id==todo.id){
+                            object.progressStatus=e.target.value ? "permenantly_deleted" : null
+                          }
+                          return object
+                        }))
+                      }
+                        } className="fas fa-trash-alt" title="Remove"></i>
+                    </div>                 
                 </div>
                 )
               }
@@ -128,6 +190,7 @@ const day = dayNames[date.getDay()];
             })
          
         }
+        </div>
       </div>
     </div>
     </div>

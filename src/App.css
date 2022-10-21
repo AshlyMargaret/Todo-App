@@ -4,7 +4,13 @@
 }
 
 body {
-  background-color: #020631;
+  /* background-color: #020631; */
+  /* background-color: #929292; */
+  background: url(./images/todo_bg.jpg);
+  height: 100vh; /* You must set a specified height */
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Do not repeat the image */
+  background-size: cover; /* Resize the background image to cover the entire container */
 }
 .app_container{
   width: 100%;
@@ -13,7 +19,7 @@ body {
   flex-direction: column;
 }
 .app {
-  width: 50%;
+  width: 60%;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -27,7 +33,7 @@ body {
 
 .app h1,
 h2 {
-  color: white;
+  color:  #020219;
 }
 
 .app .input {
@@ -45,7 +51,7 @@ h2 {
   justify-content: space-between;
   align-items: center;
   border-radius: 6px;
-  padding: 5px;
+  padding: 15px;
 }
 
 .app .input input {
@@ -94,7 +100,7 @@ h2 {
 } */
 
 .flexBox_container{
-  width: 80%;
+  width: 90%;
   /* height: 200px; */
   margin: 0 auto;
   margin-top: 60px;
@@ -107,44 +113,116 @@ h2 {
   width: 24vw;
   color:black;
 }
+.done{
+  padding: 16px;
+  background-color: #B8E4D9;
+  border-radius: 50% 20% / 10% 40%;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;;
+}
+.done i{
+  color:  #F59EAF;
+  cursor: pointer;
+}
+.ongoing i{
+  color:#EFDB8D;
+  cursor: pointer;
+}
+.trash i{
+ color: #B8E4D9;
+ cursor: pointer;
+}
+.ongoing{
+  padding: 16px;
+  background-color: #F59EAF;
+  border-radius: 10px 100px / 120px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+}
+.trash{
+  padding: 16px;
+  background-color: #EFDB8D;
+  border-radius: 25% 10%;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+}
 .done,.ongoing,.trash{
-  width: 24vw;
+ 
   height: fit-content;
-  background-color: white;
+  /* background-color: white; */
   text-align: center;
 }
 .todos{
+  width: 320px;
+  margin-top: 10px;
   padding-bottom: 10px;
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 .todo{
+  padding: 10px;
   margin-left: 10px;
   margin-right: 10px;
-  background-color: cornflowerblue;
-  border-radius: 25px;
+  background-color: #EFE9E9;
+  border-radius: .25rem;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
 .left{
   padding-left: 10px;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
+  
   
 }
 .left p{
+    width: fit-content;
     word-wrap: break-word;
     text-align: justify;
-    font-size:small;
+    font-size:large;
     font-weight: 700;
     cursor: default;
 }
 
-
 .right{
   padding-right: 10px;
+}
+
+/* Medaia Query */
+
+@media screen and (max-width:1024px) {
+  .todos{
+    width: 240px;
+  }
+}
+
+@media screen and (max-width:767px) {
+  .todos{
+    width: 240px;
+  }
+  .flexBox_container{
+    flex-direction: column;
+    align-content: space-between;
+    gap: 30px;
+  }
+  .ongoing{
+    order: 1;
+  }
+  .done{
+    order: 2;
+  }
+  .trash{
+    order: 3;
+  }
+  .title{
+    width: 100%;
+  }
+ 
+}
+@media screen and (max-width:767px){
+    h2{
+      text-align: center;
+    }
+}
+@media screen and (max-width:320px){
+  .app .input{
+    width: 250px;
+  }
 }
